@@ -47,11 +47,7 @@ Your API will be located at `http://localhost:3000/api`. You can find a collecti
 
 ## Deploying on Vercel
 
-Types are generated on dev and build **BUT** they will break when deploying on Vercel unless you do the following:
-
-**DELETE `package-lock.json` BEFORE DEPLOYING**
-
-Vercel uses a cache system for both `node_modules` and your build output based on the contents of your `package-lock.json`. This means that without deleting it entirely the command to generate your types won't generate correctly.
+Types are generated on dev and build **BUT** they will break when deploying on Vercel unless you keep the `postinstall` script in your `package.json`. This will force types to be regenerated after each install.
 
 ## Testing
 

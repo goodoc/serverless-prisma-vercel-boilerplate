@@ -53,10 +53,7 @@ export function verifyAccessToken(context: Context) {
     const Authorization = cookie.parse(context.req.headers['cookie'])
     const { accessToken } = Authorization
 
-    if (accessToken) {
-      console.log('access token is ', accessToken)
-      console.log('works')
-    } else {
+    if (!accessToken) {
       context.res.setHeader('Token-Expired', 'true')
     }
   }

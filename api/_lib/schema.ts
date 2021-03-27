@@ -1,13 +1,27 @@
 import { makeSchema } from 'nexus'
 import { nexusPrisma } from 'nexus-plugin-prisma'
 import path from 'path'
-import { applyMiddleware } from 'graphql-middleware'
+import { applyMiddleware, IMiddleware } from 'graphql-middleware'
 import { Mutation } from './mutation'
 import { Query } from './query'
 import * as Types from './types'
 import { permissions } from './permissions'
+import { Context } from './context'
+import { verifyAccessToken } from './utils'
 
 const generateArtifacts = Boolean(process.env.GENERATE_ARTIFACTS)
+
+const checkAccessToken: IMiddleware<any, any, any> = async (
+  resolve,
+  root,
+  args,
+  context: Context,
+  info,
+) => {
+  verifyAccessToken(context)
+  const result = await resolve(root, args, context, info)
+  return result
+}
 
 export const schema = applyMiddleware(
   makeSchema({
@@ -39,5 +53,6 @@ export const schema = applyMiddleware(
       ],
     },
   }),
+  checkAccessToken,
   permissions,
 )

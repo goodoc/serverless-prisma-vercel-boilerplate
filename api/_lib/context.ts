@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { IncomingMessage, ServerResponse } from 'http'
+import { verifyAccessToken } from './utils'
 
 const prisma = new PrismaClient({
   // Uncomment for debugging purposes

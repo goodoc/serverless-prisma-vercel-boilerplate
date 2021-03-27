@@ -48,25 +48,39 @@ export function verifyRefreshToken(context: Context) {
   }
 }
 
+export function verifyAccessToken(context: Context) {
+  if (context.req.headers['cookie']) {
+    const Authorization = cookie.parse(context.req.headers['cookie'])
+    const { accessToken } = Authorization
+
+    if (!accessToken) {
+      context.res.setHeader('Token-Expired', 'true')
+    }
+  }
+}
+
 export async function issueTokens(ctx: Context, user: User) {
+  const fifteenMins = 60000 * 60 * 15
+  const aMonth = 60000 * 60 * 24 * 30
+
   const securedAccessToken = sign(
     { userId: user.id, role: user.role },
     APP_SECRET,
     {
-      expiresIn: 60000 * 15,
+      expiresIn: fifteenMins,
     },
   )
 
   const securedRefreshToken = sign({ userId: user.id }, APP_SECRET, {
-    expiresIn: 60000 * 15,
+    expiresIn: aMonth,
   })
 
   ctx.res.setHeader('Set-Cookie', [
-    `accessToken=${securedAccessToken}; HttpOnly; Expires=${new Date(
-      Date.now() + 60000 * 15,
-    )};`,
-    `refreshToken=${securedRefreshToken}; HttpOnly; Expires=${new Date(
-      Date.now() + 60000 * 60 * 24 * 30,
-    )};`,
+    `accessToken=${securedAccessToken}; HttpOnly; Expires=${
+      Date.now() + fifteenMins
+    };`,
+    `refreshToken=${securedRefreshToken}; HttpOnly; Expires=${
+      Date.now() + aMonth
+    };`,
   ])
 }

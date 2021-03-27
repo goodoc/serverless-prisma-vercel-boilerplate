@@ -25,3 +25,4 @@ jobs:
           APP_SECRET: ${{ secrets.APP_SECRET }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ALLOWED_ORIGIN: ${{ secrets.ALLOWED_ORIGIN }}

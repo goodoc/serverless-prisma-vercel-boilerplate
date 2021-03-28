@@ -68,6 +68,8 @@ app.use(
   }),
 )
 
+app.get('/api/testing', (req, res) => res.json({ foo: 'bar' }))
+
 app.use(
   '/api',
   graphqlHTTP(async (req, res) => ({

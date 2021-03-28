@@ -34,7 +34,7 @@ app.use(
   }),
 )
 
-let consumerKey, consumerSecret, callbackURL
+let consumerKey: string, consumerSecret: string, callbackURL: string
 try {
   callbackURL = process.env.VERCEL_URL || 'http://localhost:3000'
   consumerKey = process.env.TWITTER_CONSUMER_KEY!
@@ -58,8 +58,6 @@ passport.use(
   ),
 )
 
-console.log(callbackURL)
-
 app.use('/api/auth/twitter', passport.authenticate('twitter'))
 
 app.use(
@@ -79,6 +77,8 @@ app.use(
   })),
 )
 
-app.use('/api/testing', (req, res) => res.json({ foo: 'bar' }))
+app.use('/api/testing', (req, res) =>
+  res.json({ callbackURL, vercelURL: process.env.VERCEL_URL }),
+)
 
 export default app

@@ -1,7 +1,8 @@
-import { ApolloServer } from 'apollo-server-micro'
+import express from 'express'
+import passport from 'passport'
+import { graphqlHTTP } from 'express-graphql'
 import { schema } from './_lib/schema'
 import { createContext } from './_lib/context'
-import { IncomingMessage, ServerResponse } from 'http'
 
 export let ALLOWED_ORIGIN: string[]
 
@@ -11,27 +12,15 @@ try {
   throw new Error('Please set allowed origins in .env file.')
 }
 
-const server = new ApolloServer({
-  schema,
-  context: createContext,
-  playground: true,
-  introspection: true,
-})
+export const app = express()
 
-const handler = server.createHandler({
-  path: '/api',
-})
+app.use(
+  '/api',
+  graphqlHTTP(async (req, res) => ({
+    schema,
+    context: createContext({ req, res }),
+    graphiql: true,
+  })),
+)
 
-// This is important or cors will fail at preflight
-export default (req: IncomingMessage, res: ServerResponse) => {
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept',
-  )
-  const origin = req.headers.origin!
-  if (ALLOWED_ORIGIN.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin)
-  }
-  res.setHeader('Access-Control-Allow-Credentials', 'true')
-  return req.method === 'OPTIONS' ? res.end() : handler(req, res)
-}
+export default app

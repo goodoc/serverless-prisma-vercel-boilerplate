@@ -1,4 +1,5 @@
 import { mutationType, stringArg, nonNull } from 'nexus'
+import passport from 'passport'
 import {
   issueTokens,
   verifyRefreshToken,
@@ -8,6 +9,14 @@ import {
 
 export const Mutation = mutationType({
   definition(t) {
+    t.field('twitter', {
+      type: 'Boolean',
+      args: {},
+      resolve: async (_parent, args, ctx): Promise<any> => {
+        passport.authenticate('twitter')
+        return true
+      },
+    })
     t.field('register', {
       type: 'User',
       args: {

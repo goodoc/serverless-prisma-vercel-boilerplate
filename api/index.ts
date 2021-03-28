@@ -58,6 +58,8 @@ passport.use(
   ),
 )
 
+console.log(callbackURL)
+
 app.use('/api/auth/twitter', passport.authenticate('twitter'))
 
 app.use(

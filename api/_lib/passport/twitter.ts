@@ -20,7 +20,7 @@ export const initializeTwitter = (app: Express) => {
       {
         consumerKey,
         consumerSecret,
-        callbackURL: `${callbackURL}/auth/twitter/callback`,
+        callbackURL: `${callbackURL}/api/auth/twitter/callback`,
       },
       function (token: any, tokenSecret: any, profile: any, cb: any) {
         console.log('Thank you for logging in', profile.displayName)
@@ -28,9 +28,9 @@ export const initializeTwitter = (app: Express) => {
     ),
   )
 
-  app.get('/api/auth/twitter', passport.authenticate('twitter'))
+  app.use('/api/auth/twitter', passport.authenticate('twitter'))
 
-  app.get(
+  app.use(
     '/api/auth/twitter/callback',
     passport.authenticate('twitter', {
       successRedirect: '/',

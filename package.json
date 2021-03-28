@@ -9,7 +9,7 @@
     "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
     "generate:prisma": "prisma generate",
     "generate:nexus": "GENERATE_ARTIFACTS=true ts-node --transpile-only api/_lib/schema",
-    "dev": "GENERATE_ARTIFACTS=true ./node_modules/.bin/tsc-watch --onSuccess 'npx micro ./dist/[...index].js'",
+    "dev": "GENERATE_ARTIFACTS=true ./node_modules/.bin/tsc-watch --onSuccess 'npx micro ./dist/index.js'",
     "postinstall": "npm run generate"
   },
   "dependencies": {

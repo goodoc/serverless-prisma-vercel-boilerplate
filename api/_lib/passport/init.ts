@@ -2,9 +2,8 @@ import passport from 'passport'
 import type { Express } from 'express'
 import { initializeTwitter } from './twitter'
 
-let secret
-
 export const initializePassport = (app: Express) => {
+  let secret
   try {
     secret = process.env.APP_SECRET!
   } catch (err) {

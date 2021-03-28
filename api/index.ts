@@ -77,7 +77,7 @@ app.use(
   })),
 )
 
-app.use('/api/testing', (req, res) =>
+app.get('/api/testing', (req, res) =>
   res.json({ callbackURL, vercelURL: process.env.VERCEL_URL }),
 )
 

@@ -3,6 +3,7 @@ import passport from 'passport'
 import { graphqlHTTP } from 'express-graphql'
 import { schema } from './_lib/schema'
 import { createContext } from './_lib/context'
+import { initializePassport } from './_lib/passport/init'
 
 export let ALLOWED_ORIGIN: string[]
 
@@ -13,6 +14,8 @@ try {
 }
 
 export const app = express()
+
+initializePassport(app)
 
 app.use(
   '/api',

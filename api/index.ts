@@ -34,9 +34,13 @@ app.use(
   }),
 )
 
-let consumerKey: string, consumerSecret: string, callbackURL: string
+let consumerKey: string,
+  consumerSecret: string,
+  callbackURL: string,
+  prefix: string
 try {
-  callbackURL = process.env.VERCEL_URL || 'http://localhost:3000'
+  prefix = process.env.VERCEL_URL ? 'https://' : 'http://'
+  callbackURL = process.env.VERCEL_URL || 'localhost:3000'
   consumerKey = process.env.TWITTER_CONSUMER_KEY!
   consumerSecret = process.env.TWITTER_CONSUMER_SECRET!
 } catch (err) {
@@ -50,7 +54,7 @@ passport.use(
     {
       consumerKey,
       consumerSecret,
-      callbackURL: `${callbackURL}/api/auth/twitter/callback`,
+      callbackURL: `${prefix}${callbackURL}/api/auth/twitter/callback`,
     },
     function (token: any, tokenSecret: any, profile: any, cb: any) {
       console.log('Thank you for logging in', profile.displayName)

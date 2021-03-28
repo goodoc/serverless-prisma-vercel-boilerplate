@@ -28,10 +28,10 @@ export const initializeTwitter = (app: Express) => {
     ),
   )
 
-  app.get('/auth/twitter', passport.authenticate('twitter'))
+  app.get('/api/auth/twitter', passport.authenticate('twitter'))
 
   app.get(
-    '/auth/twitter/callback',
+    '/api/auth/twitter/callback',
     passport.authenticate('twitter', {
       successRedirect: '/',
       failureRedirect: '/login',

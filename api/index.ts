@@ -58,14 +58,18 @@ passport.use(
   ),
 )
 
-app.use('/api/auth/twitter', passport.authenticate('twitter'))
-
 app.use(
   '/api/auth/twitter/callback',
   passport.authenticate('twitter', {
     successRedirect: '/',
     failureRedirect: '/login',
   }),
+)
+
+app.use('/api/auth/twitter', passport.authenticate('twitter'))
+
+app.get('/api/testing', (req, res) =>
+  res.json({ callbackURL, vercelURL: process.env.VERCEL_URL }),
 )
 
 app.use(
@@ -75,10 +79,6 @@ app.use(
     context: createContext({ req, res }),
     graphiql: true,
   })),
-)
-
-app.get('/api/testing', (req, res) =>
-  res.json({ callbackURL, vercelURL: process.env.VERCEL_URL }),
 )
 
 export default app

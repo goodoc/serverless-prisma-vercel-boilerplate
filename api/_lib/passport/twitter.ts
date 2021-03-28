@@ -8,7 +8,7 @@ let consumerKey, consumerSecret, callbackURL
 try {
   callbackURL = process.env.TWITTER_CALLBACK_URL!
   consumerKey = process.env.TWITTER_CONSUMER_KEY!
-  consumerSecret = process.env.TWITTER_CONSUMER_SECRET!
+  consumerSecret = process.env.VERCEL_URL!
 } catch (err) {
   throw new Error(
     'Twitter keys are missing, please add them to your .env file.',
@@ -20,7 +20,7 @@ passport.use(
     {
       consumerKey,
       consumerSecret,
-      callbackURL,
+      callbackURL: `${callbackURL}/auth/twitter/callback`,
     },
     function (token: any, tokenSecret: any, profile: any, cb: any) {
       console.log('Thank you for logging in', profile.displayName)

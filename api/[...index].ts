@@ -69,7 +69,7 @@ app.use(
 )
 
 app.use(
-  '/api/graphql',
+  '/api',
   graphqlHTTP(async (req, res) => ({
     schema,
     context: createContext({ req, res }),

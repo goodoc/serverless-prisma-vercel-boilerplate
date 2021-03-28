@@ -58,10 +58,10 @@ passport.use(
   ),
 )
 
-app.use('/auth/twitter', passport.authenticate('twitter'))
+app.use('/api/auth/twitter', passport.authenticate('twitter'))
 
 app.use(
-  '/auth/twitter/callback',
+  '/api/auth/twitter/callback',
   passport.authenticate('twitter', {
     successRedirect: '/',
     failureRedirect: '/login',
@@ -69,7 +69,7 @@ app.use(
 )
 
 app.use(
-  '/api',
+  '/api/graphql',
   graphqlHTTP(async (req, res) => ({
     schema,
     context: createContext({ req, res }),
@@ -77,6 +77,6 @@ app.use(
   })),
 )
 
-app.use('/testing', (req, res) => res.json({ foo: 'bar' }))
+app.use('/api/testing', (req, res) => res.json({ foo: 'bar' }))
 
 export default app

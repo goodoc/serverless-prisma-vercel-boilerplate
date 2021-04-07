@@ -1,8 +1,8 @@
 import passport from 'passport'
-import type { Express } from 'express'
 import { initializeTwitter } from './twitter'
+import app from '../..'
 
-export const initializePassport = (app: Express) => {
+export const initializePassport = () => {
   let secret
   try {
     secret = process.env.APP_SECRET!
@@ -20,5 +20,5 @@ export const initializePassport = (app: Express) => {
       saveUninitialized: true,
     }),
   )
-  initializeTwitter(app)
+  initializeTwitter()
 }

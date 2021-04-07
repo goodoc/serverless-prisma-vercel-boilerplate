@@ -1,12 +1,15 @@
 import passport from 'passport'
-import type { Express } from 'express'
+import { Strategy } from 'passport-twitter'
+import app from '../..'
 
-var Strategy = require('passport-twitter').Strategy
-
-export const initializeTwitter = (app: Express) => {
-  let consumerKey, consumerSecret, callbackURL
+export const initializeTwitter = () => {
+  let consumerKey: string,
+    consumerSecret: string,
+    callbackURL: string,
+    prefix: string
   try {
-    callbackURL = process.env.VERCEL_URL || 'http://localhost:3000'
+    prefix = process.env.VERCEL_URL ? 'https://' : 'http://'
+    callbackURL = process.env.VERCEL_URL || 'localhost:3000'
     consumerKey = process.env.TWITTER_CONSUMER_KEY!
     consumerSecret = process.env.TWITTER_CONSUMER_SECRET!
   } catch (err) {
@@ -20,21 +23,23 @@ export const initializeTwitter = (app: Express) => {
       {
         consumerKey,
         consumerSecret,
-        callbackURL: `${callbackURL}/api/auth/twitter/callback`,
+        callbackURL: `${prefix}${callbackURL}/api/auth/twitter/callback`,
       },
-      function (token: any, tokenSecret: any, profile: any, cb: any) {
+      function (_token, _tokenSecret, profile, done) {
         console.log('Thank you for logging in', profile.displayName)
+        return done(null, { name: profile.displayName })
       },
     ),
   )
 
-  app.use('/api/auth/twitter', passport.authenticate('twitter'))
-
-  app.use(
+  app.get(
     '/api/auth/twitter/callback',
     passport.authenticate('twitter', {
       successRedirect: '/',
-      failureRedirect: '/login',
+      failureRedirect: '/',
+      session: false,
     }),
   )
+
+  app.use('/api/auth/twitter', passport.authenticate('twitter'))
 }

@@ -67,8 +67,6 @@ export const initializePassport = () => {
         throw Error(err)
       }
 
-      res.cookie
-
       // And issue access and refresh tokens
       issueTokens(res, { id: user!.id })
 

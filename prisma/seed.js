@@ -27,7 +27,6 @@ const main = async () => {
       data: {
         email: user.email,
         username: user.username,
-        role: user.role,
         password: user.password,
       },
     })

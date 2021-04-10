@@ -59,13 +59,24 @@ describe('User Endpoints', () => {
     expect(res.body.errors[0].message).to.be.a('string', 'Not Authorised!')
   })
   it('logged in users can view user details', async () => {
-    const res = await chai
-      .request(app)
+    const agent = chai.request.agent(app)
+
+    const res = await agent
       .post('/api')
-      .set('Cookie', 'accessToken=' + process.env.ACCESS_TOKEN)
       .send({
-        query: '{ me { email } }',
+        query:
+          'mutation { login (email: "test@example.com", password: "testing" ) { email } }',
       })
+      .then((res: any) => {
+        expect(res).to.have.cookie('accessToken')
+        return agent
+          .post('/api')
+          .set('Cookie', 'accessToken=' + process.env.ACCESS_TOKEN)
+          .send({
+            query: '{ me { email } }',
+          })
+      })
+
     expect(res.body.data.me.email).to.exist
   })
 })

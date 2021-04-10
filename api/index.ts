@@ -15,7 +15,7 @@ try {
 
 export const app = express()
 
-let secret
+export let secret: string
 try {
   secret = process.env.APP_SECRET!
 } catch (err) {

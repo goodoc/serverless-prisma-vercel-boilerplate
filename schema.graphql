@@ -6,7 +6,6 @@ type Mutation {
   login(email: String!, password: String!): User
   refresh: User
   register(email: String!, password: String!, username: String!): User
-  twitter: Boolean
 }
 
 type Query {
@@ -15,7 +14,7 @@ type Query {
 
 type User {
   email: String
-  id: Int
+  id: String
   role: String
   username: String
 }

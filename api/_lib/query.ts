@@ -9,7 +9,7 @@ export const Query = queryType({
         const userId = getUserId(ctx)
         const user = await ctx.prisma.user.findUnique({
           where: {
-            id: Number(userId),
+            id: userId,
           },
         })
         return user

@@ -2,6 +2,7 @@ import { sign, verify } from 'jsonwebtoken'
 import { Context } from './context'
 import { compare, hash } from 'bcryptjs'
 import { Prisma, User } from '@prisma/client'
+import { ServerResponse } from 'http'
 require('dotenv').config()
 const cookie = require('cookie')
 
@@ -59,23 +60,19 @@ export function verifyAccessToken(context: Context) {
   }
 }
 
-export async function issueTokens(ctx: Context, user: User) {
+export async function issueTokens(res: ServerResponse, user: { id: string }) {
   const fifteenMins = 60000 * 60 * 15
   const aMonth = 60000 * 60 * 24 * 30
 
-  const securedAccessToken = sign(
-    { userId: user.id, role: user.role },
-    APP_SECRET,
-    {
-      expiresIn: fifteenMins,
-    },
-  )
+  const securedAccessToken = sign({ userId: user.id }, APP_SECRET, {
+    expiresIn: fifteenMins,
+  })
 
   const securedRefreshToken = sign({ userId: user.id }, APP_SECRET, {
     expiresIn: aMonth,
   })
 
-  ctx.res.setHeader('Set-Cookie', [
+  res.setHeader('Set-Cookie', [
     `accessToken=${securedAccessToken}; HttpOnly; Expires=${
       Date.now() + fifteenMins
     };`,

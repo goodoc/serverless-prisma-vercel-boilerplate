@@ -6,14 +6,13 @@ const rules = {
     const userId = getUserId(context)
     const user = await context.prisma.user.findUnique({
       where: {
-        id: Number(userId),
+        id: userId,
       },
     })
     return Boolean(userId)
   }),
 }
 
-// Being admin or mod takes precedence over being banned or not
 export const permissions = shield({
   Query: {
     me: rules.isAuthenticatedUser,

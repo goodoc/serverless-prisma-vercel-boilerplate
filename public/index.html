@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Prisma GraphQL example with Zeit Now</title>
+    <title>Prisma GraphQL example for Vercel</title>
     <link
       rel="stylesheet"
       href="https://unpkg.com/tailwindcss/dist/tailwind.min.css"
@@ -52,155 +52,8 @@
     </style>
   </head>
   <body>
-    <div class="py-24" style="background: rgb(12, 52, 75);">
-      <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold mb-8 text-white">
-          Prisma GraphQL example with Zeit Now
-        </h2>
-        <a href="/api" target="_blank">
-          <button
-            class="fetch-button focus:outline-none bg-blue-200 font-bold rounded-full py-4 px-8 my-2 shadow-lg uppercase tracking-wider"
-          >
-            GraphQL Playground
-          </button>
-        </a>
-        <button
-          onclick="callGraphqlApi(graphqlQueries.seed)"
-          class="fetch-button focus:outline-none bg-white font-bold rounded-full py-4 px-8 my-2 shadow-lg uppercase tracking-wider"
-        >
-          Seed Database
-        </button>
-        <button
-          onclick="callGraphqlApi(graphqlQueries.users)"
-          class="fetch-button focus:outline-none bg-white font-bold rounded-full py-4 px-8 my-2 shadow-lg uppercase tracking-wider"
-        >
-          Get Users
-        </button>
-        <button
-          onclick="callGraphqlApi(graphqlQueries.feed)"
-          class="fetch-button focus:outline-none bg-white font-bold rounded-full py-4 px-8 my-2 shadow-lg uppercase tracking-wider"
-        >
-          Get Feed
-        </button>
-        <button
-          onclick="callGraphqlApi(graphqlQueries.newUser)"
-          class="fetch-button focus:outline-none bg-white font-bold rounded-full py-4 px-8 my-2 shadow-lg uppercase tracking-wider"
-        >
-          Create User
-        </button>
-        <button
-          onclick="callGraphqlApi(graphqlQueries.createDraft)"
-          class="fetch-button focus:outline-none bg-white font-bold rounded-full py-4 px-8 my-2 shadow-lg uppercase tracking-wider"
-        >
-          Create Draft
-        </button>
-        <div class="loader invisible"></div>
-      </div>
-    </div>
-
-    <div class="container flex flex-col mx-auto">
-      <pre
-        class="flex-1 whitespace-pre-wrap query-container text-white px-8 pt-6 pb-8 bg-blue-900 shadow-md invisible"
-      ></pre>
-      <pre
-        class="flex-1 whitespace-pre-wrap response-container text-white px-8 pt-6 pb-8 bg-black shadow-md invisible"
-      ></pre>
-    </div>
-
-    <script>
-      const queryContainer = document.querySelector('.query-container')
-      const responseContainer = document.querySelector('.response-container')
-      const loader = document.querySelector('.loader')
-      function renderResponse(res) {
-        responseContainer.textContent = JSON.stringify(res, null, 2)
-      }
-
-      const graphqlQueries = {
-        seed: `
-      mutation {
-        seed {
-          email
-          posts {
-            title
-          }
-        }
-      }
-      `,
-        feed: `
-      query {
-        feed {
-          id
-          title
-          content
-          published
-          author {
-            id
-            name
-            email
-          }
-        }
-      }
-      `,
-        users: `
-      query {
-        {
-          users {
-            email
-            id
-          }
-        }
-      }
-      `,
-        newUser: `
-      mutation {
-        signupUser(
-          data: {
-            name: "Sarah"
-            email: "sarah@prisma.io"
-          }
-        ) {
-          id
-        }
-      }`,
-        createDraft: `
-      mutation {
-        createDraft(
-          title: "Join the Prisma Slack"
-          content: "https://slack.prisma.io"
-          authorEmail: "jane@prisma.io"
-        ) {
-          id
-          published
-        }
-      }`,
-      }
-
-      const callGraphqlApi = (query) => {
-        queryContainer.textContent = query
-        queryContainer.classList.remove('invisible')
-        responseContainer.textContent = ''
-        loader.classList.remove('invisible')
-        fetch(`/api`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query }),
-        })
-          .then(function (response) {
-            return response.json()
-          })
-          .then(function (response) {
-            renderResponse(response)
-            responseContainer.classList.remove('invisible')
-            loader.classList.add('invisible')
-          })
-          .catch(function (err) {
-            responseContainer.classList.remove('invisible')
-            responseContainer.textContent = 'Error fetching'
-          })
-          .finally(function () {
-            loader.classList.add('invisible')
-          })
-      }
-    </script>
+    <h2 class="text-4xl font-bold mb-8 text-white">
+      Sorry I don't have a good landing page yet!
+    </h2>
   </body>
 </html>

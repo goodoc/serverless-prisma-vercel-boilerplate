@@ -14,7 +14,7 @@ type Query {
 
 type User {
   email: String
-  id: Int
+  id: String
   role: String
   username: String
 }

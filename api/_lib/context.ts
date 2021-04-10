@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import { IncomingMessage, ServerResponse } from 'http'
 import { verifyAccessToken } from './utils'
 
-const prisma = new PrismaClient({
+export const prisma = new PrismaClient({
   // Uncomment for debugging purposes
   // log: ['query', 'info', 'warn'],
 })
@@ -14,7 +14,7 @@ export interface Context {
 }
 
 // @ts-ignore
-export function createContext({ req, res, ...rest }: Context) {
+export function createContext({ req, res, ...rest }): Context {
   return {
     req,
     res,

@@ -9,7 +9,14 @@ This is a Prisma Boilerplate API build for the Vercel platform. It includes:
 - Cors support
 - Basic endpoint testing with chai and mocha
 - Automatic database seeding and reset
+- Twitter login with Passport.js
 - Written in Typescript!
+
+This boilerplate is build with [Prisma](https://www.prisma.io/) and [Express](https://expressjs.com/). Express is largely used to support [Passport.js](http://www.passportjs.org/) login.
+
+I made this repo to create a quick foundation to build serverless GraphQL APIs on the Vercel platform as I initially found it quite hard to get started because of some quirks from both Vercel and Prisma.
+
+The implementation is solid and I've been using this repo in production on a couple of projects, but it is in no way perfect or flawless. Please report any bugs that you find and feel free to contribute!
 
 ## Set up Postgres
 
@@ -26,7 +33,6 @@ The API depends on three environment variables. These can be set locally by crea
 ```
 DATABASE_URL=postgres://username:password@address:5432/databasename
 APP_SECRET=appsecret123
-ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjExMDc1NDQyLCJleHAiOjE2MTE5NzU0NDJ9.mFWd0A6ZhAHVv_clkp7ijDMgxbQbJ01h_yXVjgisiIA
 ALLOWED_ORIGIN=http://localhost:8080
 ```
 
@@ -34,7 +40,7 @@ ALLOWED_ORIGIN=http://localhost:8080
 
 `DATABASE_URL` should be a connection string for your database. This API was developped with Postgres because it's extremely easy to set up a free Postgres database on Heroku, but it should work with any database.
 
-`ALLOWED_ORIGIN` handles where requests are allowed from. Change this depending on your environment.
+`ALLOWED_ORIGIN` handles where requests are allowed from. Change this depending on your environment. This can be an array!
 
 ## Development
 
@@ -48,6 +54,23 @@ Your API will be located at `http://localhost:3000/api`. You can find a collecti
 ## Deploying on Vercel
 
 Types are generated on dev and build **BUT** they will break when deploying on Vercel unless you keep the `postinstall` script in your `package.json`. This will force types to be regenerated after each install.
+
+## Twitter login
+
+Twitter login has been implemented with Passport.js, you can find more about the [twitter-strategy on the Passport.js docs](http://www.passportjs.org/packages/passport-twitter/).
+
+The twitter strategy will only be initialised if the following environment variables are added to `.env`:
+
+```
+TWITTER_CONSUMER_KEY
+TWITTER_CONSUMER_SECRET
+```
+
+In addition the Twitter strategy uses the Vercel environment variable `VERCEL_URL` for building the callback url.
+
+Once these are set you can visit http://localhost:3000/api/auth/twitter and the login process will start. The user's Twitter info will be automatically written to the database once the process is complete and access tokens will be issued for the account.
+
+At the moment failure and success redirect to other API pages. Make sure you edit the [`failureRedirect`](https://github.com/coloredcat/serverless-prisma-vercel-boilerplate/blob/master/api/passport/twitter.ts#L107) and [`successRedirect`](<[`failureRedirect`](https://github.com/coloredcat/serverless-prisma-vercel-boilerplate/blob/master/api/passport/init.ts#L76)>) to redirect to your front-end!
 
 ## Testing
 

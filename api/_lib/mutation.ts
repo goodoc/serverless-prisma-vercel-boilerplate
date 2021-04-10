@@ -1,4 +1,5 @@
 import { mutationType, stringArg, nonNull } from 'nexus'
+import passport from 'passport'
 import {
   issueTokens,
   verifyRefreshToken,
@@ -28,14 +29,13 @@ export const Mutation = mutationType({
             data: {
               username,
               email,
-              role: 'user',
               password: hashedPassword,
             },
           })
         } catch (err) {
           return new Error(err)
         }
-        await issueTokens(ctx, user)
+        await issueTokens(ctx.res, user)
 
         return user
       },
@@ -49,7 +49,7 @@ export const Mutation = mutationType({
       resolve: async (_parent, { email, password }, ctx): Promise<any> => {
         let user
         try {
-          user = await ctx.prisma.user.findUnique({
+          user = await ctx.prisma.user.findFirst({
             where: { email },
           })
         } catch (err) {
@@ -61,10 +61,10 @@ export const Mutation = mutationType({
           return new Error('Login failed.')
         }
 
-        const isValid = await comparePassword(password, user.password)
+        const isValid = await comparePassword(password, user.password!)
 
         if (isValid) {
-          await issueTokens(ctx, user)
+          await issueTokens(ctx.res, user)
         } else {
           // Error to throw if passwords don't match
           return new Error('Login failed.')
@@ -86,14 +86,14 @@ export const Mutation = mutationType({
         let user
         try {
           user = await ctx.prisma.user.findUnique({
-            where: { id: Number(userId) },
+            where: { id: userId },
           })
         } catch (err) {
           return new Error(err)
         }
 
         if (user) {
-          await issueTokens(ctx, user)
+          await issueTokens(ctx.res, user)
         } else {
           return new Error('Could not refresh token.')
         }

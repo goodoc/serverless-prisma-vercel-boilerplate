@@ -4,6 +4,7 @@ import { graphqlHTTP } from 'express-graphql'
 import { schema } from './_lib/schema'
 import { createContext } from './_lib/context'
 import { initializePassport } from './_lib/passport/init'
+import cors from 'cors'
 
 export let ALLOWED_ORIGIN: string[]
 
@@ -14,6 +15,12 @@ try {
 }
 
 export const app = express()
+
+const corsOptions = {
+  origin: ALLOWED_ORIGIN,
+}
+
+app.use(cors(corsOptions))
 
 export let secret: string
 try {

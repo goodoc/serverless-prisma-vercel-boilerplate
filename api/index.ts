@@ -16,11 +16,12 @@ try {
 
 export const app = express()
 
-const corsOptions = {
-  origin: ALLOWED_ORIGIN,
-}
-
-app.use(cors(corsOptions))
+app.use(
+  cors({
+    origin: ALLOWED_ORIGIN,
+    credentials: true,
+  }),
+)
 
 export let secret: string
 try {

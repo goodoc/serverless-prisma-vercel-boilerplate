@@ -73,10 +73,10 @@ export async function issueTokens(res: ServerResponse, user: { id: string }) {
   })
 
   res.setHeader('Set-Cookie', [
-    `accessToken=${securedAccessToken}; HttpOnly; Expires=${
+    `accessToken=${securedAccessToken}; HttpOnly; Max-Age=${
       Date.now() + fifteenMins
     };`,
-    `refreshToken=${securedRefreshToken}; HttpOnly; Expires=${
+    `refreshToken=${securedRefreshToken}; HttpOnly; Max-Age=${
       Date.now() + aMonth
     };`,
   ])

@@ -47,7 +47,7 @@ ALLOWED_ORIGIN=http://localhost:8080
 Starting development is easy!
 
 - `npm i`
-- `npm run dev`
+- `npm run vercel:dev`
 
 Your API will be located at `http://localhost:3000/api`. You can find a collection of requests for postman [at this link](https://www.getpostman.com/collections/4302c548537e993a8a36).
 

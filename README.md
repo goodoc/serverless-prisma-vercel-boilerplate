@@ -2,7 +2,7 @@
 
 This is a Prisma Boilerplate API build for the Vercel platform. It includes:
 
-- Build-in registration and login system
+- Built-in registration and login system
 - JWT token auth
 - Token refresh logic
 - Graphql Shield permissions

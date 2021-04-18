@@ -2,7 +2,7 @@ import passport from 'passport'
 import express, { Response } from 'express'
 import cookieParser from 'cookie-parser'
 import { initializeTwitter, TwitterProfileInterface } from './twitter'
-import { app, secret } from '../..'
+import { app, secret } from '../../index'
 import { sign } from 'jsonwebtoken'
 import { prisma } from '../context'
 

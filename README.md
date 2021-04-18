@@ -2,7 +2,7 @@
 
 This is a Prisma Boilerplate API build for the Vercel platform. It includes:
 
-- Build-in registration and login system
+- Built-in registration and login system
 - JWT token auth
 - Token refresh logic
 - Graphql Shield permissions
@@ -47,7 +47,7 @@ ALLOWED_ORIGIN=http://localhost:8080
 Starting development is easy!
 
 - `npm i`
-- `npm run dev`
+- `npm run vercel:dev`
 
 Your API will be located at `http://localhost:3000/api`. You can find a collection of requests for postman [at this link](https://www.getpostman.com/collections/4302c548537e993a8a36).
 

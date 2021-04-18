@@ -33,7 +33,7 @@ export const Mutation = mutationType({
             },
           })
         } catch (err) {
-          return new Error(err)
+          return new Error('Your account could not be created.')
         }
         await issueTokens(ctx.res, user)
 

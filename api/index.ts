@@ -31,8 +31,8 @@ try {
   );
 }
 
-app.use(require("./passport/init"));
-app.use(require("./passport/twitter"));
+app.use(require("./_lib/passport/init"));
+app.use(require("./_lib/passport/twitter"));
 
 app.use(
   "/api",

@@ -31,6 +31,9 @@ try {
   );
 }
 
+app.use(require("./passport/init.ts"));
+app.use(require("./passport/twitter.ts"));
+
 app.use(
   "/api",
   graphqlHTTP(async (req, res) => ({

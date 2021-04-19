@@ -32,7 +32,7 @@ try {
   )
 }
 
-initializePassport()
+// initializePassport()
 
 app.use(
   '/api',

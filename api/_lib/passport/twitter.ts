@@ -2,7 +2,7 @@ import { RequestHandler } from 'express'
 import { sign } from 'jsonwebtoken'
 import passport from 'passport'
 import { Strategy } from 'passport-twitter'
-import { app } from '../..'
+import { app } from '../../index'
 import { prisma } from '../context'
 import { BasePassportUserInterface } from './init'
 
